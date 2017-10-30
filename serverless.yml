@@ -1,5 +1,8 @@
 service: serverless-react-boilerplate
 
+# plugins:
+#   - serverless-webpack
+
 provider:
   name: aws
   runtime: nodejs6.10
@@ -12,3 +15,6 @@ functions:
     events:
       - http: ANY /
       - http: 'ANY {proxy+}'
+
+# custom:
+#   webpackIncludeModules: true

@@ -1,3 +1,5 @@
+var path = require('path');
+var slsw = require('serverless-webpack');
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var nodeExternals = require('webpack-node-externals');
@@ -21,9 +23,9 @@ var commonLoaders = [
 
 module.exports = [
   {
-    entry: './src/lambda.js',
+    entry: path.resolve(__dirname, 'src/lambda.js'),
     output: {
-      path: './dist',
+      path: path.resolve(__dirname, 'dist'),
       filename: 'lambda.js',
       libraryTarget: 'commonjs2',
       publicPath: '/'
@@ -37,13 +39,13 @@ module.exports = [
       __filename: false,
       __dirname: false
     },
-    externals: nodeExternals(),
+    externals: [nodeExternals()],
     plugins: productionPluginDefine,
     module: {
       loaders: [
         {
           test: /\.js$/,
-          loader: 'babel'
+          loader: ['babel-loader']
         }
       ].concat(commonLoaders)
     }
@@ -51,7 +53,7 @@ module.exports = [
   {
     entry: './src/app/browser.js',
     output: {
-      path: './dist/assets',
+      path: path.resolve(__dirname, 'dist/assets'),
       publicPath: '/',
       filename: 'bundle.js'
     },
@@ -65,7 +67,7 @@ module.exports = [
         {
           test: /\.js$/,
           exclude: /node_modules/,
-          loader: 'babel'
+          loader: ['babel-loader']
         },
         {
           test: /\.scss$/,
@@ -74,7 +76,7 @@ module.exports = [
       ]
     },
     resolve: {
-      extensions: ['', '.js', '.jsx']
+      extensions: ['*', '.js', '.jsx']
     }
   }
 ];

@@ -8,7 +8,7 @@ provider:
 
 functions:
   lambda:
-    handler: lambda.handler
+    handler: dist/lambda.handler
     events:
       - http: ANY /
       - http: 'ANY {proxy+}'
